@@ -1,19 +1,4 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -21,18 +6,70 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+.Task-App {
+  min-height: 75vh;
+  height: 75vh;
+  min-width: 60vw;
+  width: 60vw;
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Task-App * {
+  margin: 0;
+}
+
+.task-app-content {
+  display: flex;
+  height: 100%;
+}
+
+.task-list {
+  width: 30%;
+  border-right: 1px solid darkgray;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.task-list-element {
+  border-bottom: 1px solid darkgray;
+  padding: 5px 10px;
+}
+
+.task-list-element h1 {
+  font-size: 18px;
+}
+
+.task-list-element p {
+  font-size: 14px;
+}
+
+.task-list-element:hover {
+  cursor: pointer;
+}
+
+.task-content{
+  padding: 5px 10px;
+}
+
+.list-picker{
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid darkgray;
+}
+
+.list-picker-element{
+  font-size: 18px;
+  padding: 5px 5px;
+  background-color: silver;
+  border-top-right-radius: 10px;
+  font-weight: bold;
+  margin-right: 2px;
+  cursor: pointer;
 }
