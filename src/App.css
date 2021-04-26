@@ -55,6 +55,25 @@
 }
 
 .task-content{
+  width: 70%;
+  position: relative;
+}
+
+.task-content-main{
+  padding: 5px 10px;
+}
+
+.task-content-status {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  font-size: 11px;
+  display: flex;
+  justify-content: flex-end;
+  background-color: lightgrey;
+}
+
+.task-content-status > * {
   padding: 5px 10px;
 }
 
