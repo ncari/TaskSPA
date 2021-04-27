@@ -30,11 +30,28 @@ function TaskApp() {
     const taskLists = tasks.map(t => { return {id: t.id, name: t.list} });
     const currentList = tasks[currentListIndex];
 
+    const newTask = () => {
+        const newT = {id: currentList.tasks.length + 1, title: 'New task', description: 'New task description.'};
+        const l = currentList.tasks;
+        const newTs = [newT, ...l];
+        const tasksAux = [...tasks];
+        tasksAux[currentListIndex].tasks = newTs;
+        setTasks(tasksAux);
+        setCurrentTask(0);
+    }
+
     const changeList = (id) => {
         if(currentList.id !== id){
             setCurrentList(tasks.findIndex(l => l.id === id));
             setCurrentTask(0);
         }
+    }
+
+    const updateCurrentTask = ({title, description}) => {
+        const updT = Object.assign({...currentList.tasks[currentTaskIndex]}, {title, description});
+        const tasksAux = [...tasks];
+        tasksAux[currentListIndex].tasks[currentTaskIndex] = updT;
+        setTasks(tasksAux);
     }
 
     return (
@@ -49,12 +66,17 @@ function TaskApp() {
             <div className="task-app-content">
                 <div className="task-list">
                     <TaskList 
-                        tasks={currentList.tasks} 
+                        tasks={currentList.tasks}
+                        current={currentList.tasks[currentTaskIndex].id} 
                         onChange={(id) => setCurrentTask(currentList.tasks.findIndex(t => t.id === id))}
+                        onNewTask={newTask}
                     />
                 </div>
                 <div className="task-content">
-                    <TaskContent task={currentList.tasks[currentTaskIndex]} />
+                    <TaskContent 
+                        task={currentList.tasks[currentTaskIndex]} 
+                        onChange={(v) => updateCurrentTask(v)}
+                    />
                 </div>
             </div>
         </div>

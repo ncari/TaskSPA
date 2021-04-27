@@ -30,7 +30,8 @@
 
 .task-list {
   width: 30%;
-  border-right: 1px solid darkgray;
+  border-right: 1px solid lightgray;
+  background-color: #fafafa;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -38,8 +39,14 @@
 }
 
 .task-list-element {
-  border-bottom: 1px solid darkgray;
+  border-bottom: 1px solid lightgray;
   padding: 5px 10px;
+}
+.task-list-element:hover {
+  background-color: whitesmoke;
+}
+.task-list-element.active {
+  background-color: #e0e1e2;
 }
 
 .task-list-element h1 {
@@ -63,24 +70,33 @@
   padding: 5px 10px;
 }
 
-.task-content-status {
+.task-content-footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   font-size: 11px;
-  display: flex;
-  justify-content: flex-end;
-  background-color: lightgrey;
 }
 
-.task-content-status > * {
+.task-content-functions {
+  display: flex;
+  justify-content: flex-end;
+  background-color: whitesmoke;
+}
+
+.task-content-status {
+  display: flex;
+  justify-content: flex-end;
+  background-color: lightgray;
+}
+
+.task-content-functions > *, .task-content-status > * {
   padding: 5px 10px;
 }
 
 .list-picker{
   width: 100%;
   display: flex;
-  border-bottom: 1px solid darkgray;
+  border-bottom: 1px solid lightgray;
 }
 
 .list-picker-element{

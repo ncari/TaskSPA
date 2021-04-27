@@ -1,12 +1,21 @@
+import { Button } from 'semantic-ui-react';
+
 const TaskListPicker = (props) => {
     const { lists, current } = props;
     return (
         <div className="list-picker">
-            {lists.map(({id, name}) => (
-                <div className="list-picker-element" key={id} onClick={() => props.onChange(id)}>
-                    <span style={id === current ? {textDecoration: 'underline'} : {}}>{name}</span>
-                </div>
-            ))}
+            <Button.Group floated='left' size="mini">
+                {lists.map(({id, name}) => (
+                    <Button 
+                        color={id === current && 'active'} 
+                        onClick={() => props.onChange(id)}
+                        key={id}
+                        style={{borderRadius: '0px'}}
+                    >
+                        {name}
+                    </Button>
+                ))}
+            </Button.Group>
         </div>
     );
 }
