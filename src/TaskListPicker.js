@@ -1,7 +1,18 @@
-import { Button } from 'semantic-ui-react';
+import { useState } from 'react';
+import { Button, Icon, Input } from 'semantic-ui-react';
 
 const TaskListPicker = (props) => {
     const { lists, current } = props;
+    const [editing, setEditing] = useState(false);
+    const [inputValue, setInputValue] = useState('');
+
+    const handleNew = () => {
+        if(props.onNewList)
+            props.onNewList(inputValue)
+        setEditing(false);
+        setInputValue('');
+    }       
+
     return (
         <div className="list-picker">
             <Button.Group floated='left' size="mini">
@@ -15,6 +26,28 @@ const TaskListPicker = (props) => {
                         {name}
                     </Button>
                 ))}
+                {
+                    editing && (
+                        <Button 
+                            style={{borderRadius: '0px'}}
+                        >
+                            <Input
+                                size="tiny" 
+                                autoFocus
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)} 
+                                onBlur={handleNew}
+                            />
+                        </Button>
+                    )
+                }
+                <Button
+                    style={{borderRadius: '0px'}}
+                    onClick={() => setEditing(true)}
+                    icon
+                >
+                    <Icon name="add" />
+                </Button>
             </Button.Group>
         </div>
     );

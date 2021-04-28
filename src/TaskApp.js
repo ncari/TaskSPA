@@ -63,6 +63,16 @@ function TaskApp() {
         setCurrentTasks(currTasks);
     }
 
+    const newList = (name) => {
+        if(name === '')
+            name = `List ${lists.length + 1}`;
+        setLists([...lists, {id: lists.length + 1, name}]);
+        setNonCurrentTasks([...nonCurrentTasks, {
+            listId: lists.length + 1,
+            tasks : [{id: currentTasks.length + 1, title: 'New task', description: 'New task description.'}]
+        }]);
+    }
+
     return (
         <div className="Task-App">
             <div className="task-app-header">
@@ -70,6 +80,7 @@ function TaskApp() {
                     lists={lists} 
                     current={currentList.id} 
                     onChange={changeList}
+                    onNewList={newList}
                 /> 
             </div>
             <div className="task-app-content">
