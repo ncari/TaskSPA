@@ -73,6 +73,20 @@ function TaskApp() {
         }]);
     }
 
+    const deleteTask = (id) => {
+        const indexOfTask = currentTasks.findIndex(t => t.id === id);
+        if(indexOfTask < currentTaskIndex)
+            setCurrentTaskIndex(currentTaskIndex - 1);
+        else if(indexOfTask === currentTaskIndex){
+            const newI = currentTasks.length - 1 > indexOfTask ? indexOfTask : indexOfTask - 1;
+            setCurrentTaskIndex(newI);
+        }
+
+        const newCurrentTasks = [...currentTasks];
+        newCurrentTasks.splice(indexOfTask, 1);
+        setCurrentTasks(newCurrentTasks);
+    }
+
     return (
         <div className="Task-App">
             <div className="task-app-header">
@@ -90,6 +104,7 @@ function TaskApp() {
                         current={currentTask.id} 
                         onChange={(id) => setCurrentTaskIndex(currentTasks.findIndex(t => t.id === id))}
                         onNewTask={newTask}
+                        onDeleteTask={deleteTask}
                     />
                 </div>
                 <div className="task-content">

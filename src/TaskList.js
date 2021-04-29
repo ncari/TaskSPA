@@ -8,6 +8,12 @@ const TaskList = (props) => {
             return `${text.substring(0, resumeLength)}...`;
         return text;
     }
+
+    const deleteTask = (id) => {
+        if(props.onDeleteTask)
+            props.onDeleteTask(id);
+    }
+
     return (
         <>  
             <div style={{display: 'flex', justifyContent: 'center', padding: '5px 0px', borderBottom: '1px solid lightgray'}}>
@@ -26,7 +32,22 @@ const TaskList = (props) => {
                             className={classes}
                             onClick={() => props.onChange(task.id)}
                         >
-                            <h1>{task.title}</h1>
+                            <h1>
+                                {task.title}
+                                <span style={{float: 'right'}}>
+                                    <Button 
+                                        icon
+                                        circular 
+                                        size="mini"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            deleteTask(task.id)
+                                        }}
+                                    >
+                                        <Icon name="trash alternate outline" />
+                                    </Button>
+                                </span>
+                            </h1>
                             <p>{resume(task.description)}</p>
                         </div>
                     </Draggable>
