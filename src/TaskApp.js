@@ -12,25 +12,27 @@ function TaskApp() {
         {
             listId: 2,
             tasks: [
-                {id: 1, title: 'PENDING task', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque erat massa, aliquet eu lobortis nec, efficitur sit amet ipsum. Phasellus at quam sodales, rhoncus velit vitae, venenatis mauris. Sed pharetra.'},
-                {id: 2, title: 'PENDING task', description: 'Nullam nec commodo quam. Maecenas eget feugiat odio. Morbi feugiat eleifend dictum. Quisque egestas ligula vitae tellus sagittis convallis.'},
-                {id: 3, title: 'PENDING task', description: 'Aenean sodales neque lorem, vel maximus felis lobortis a. Duis lobortis mauris leo, sed pharetra augue condimentum nec. Praesent dictum leo vel sem consectetur, eget blandit nisl blandit.'},
+                {id: 4, title: 'PENDING task', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque erat massa, aliquet eu lobortis nec, efficitur sit amet ipsum. Phasellus at quam sodales, rhoncus velit vitae, venenatis mauris. Sed pharetra.'},
+                {id: 5, title: 'PENDING task', description: 'Nullam nec commodo quam. Maecenas eget feugiat odio. Morbi feugiat eleifend dictum. Quisque egestas ligula vitae tellus sagittis convallis.'},
+                {id: 6, title: 'PENDING task', description: 'Aenean sodales neque lorem, vel maximus felis lobortis a. Duis lobortis mauris leo, sed pharetra augue condimentum nec. Praesent dictum leo vel sem consectetur, eget blandit nisl blandit.'},
             ]
         },
         {
             listId: 3,
             tasks: [
-                {id: 1, title: 'Prueba task', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque erat massa, aliquet eu lobortis nec, efficitur sit amet ipsum. Phasellus at quam sodales, rhoncus velit vitae, venenatis mauris. Sed pharetra.'},
+                {id: 7, title: 'Prueba task', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque erat massa, aliquet eu lobortis nec, efficitur sit amet ipsum. Phasellus at quam sodales, rhoncus velit vitae, venenatis mauris. Sed pharetra.'},
             ]
         }
     ])
     const [currentTasks, setCurrentTasks] = useState([
-            {id: 1, title: 'TODO task', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque erat massa, aliquet eu lobortis nec, efficitur sit amet ipsum. Phasellus at quam sodales, rhoncus velit vitae, venenatis mauris. Sed pharetra.'},
+            {id: 1, title: 'How to move a task?', description: 'Right click in the task u want to move. Then select the target list. Just like that'},
             {id: 2, title: 'TODO task', description: 'Nullam nec commodo quam. Maecenas eget feugiat odio. Morbi feugiat eleifend dictum. Quisque egestas ligula vitae tellus sagittis convallis.'},
             {id: 3, title: 'TODO task', description: 'Aenean sodales neque lorem, vel maximus felis lobortis a. Duis lobortis mauris leo, sed pharetra augue condimentum nec. Praesent dictum leo vel sem consectetur, eget blandit nisl blandit.'},
     ])
     const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
     const [currentListIndex, setCurrentListIndex] = useState(0);
+
+    const [moveTaskId, setMoveTaskId] = useState(null);
 
     const currentTask = currentTasks[currentTaskIndex];
     const currentList = lists[currentListIndex];
@@ -87,6 +89,19 @@ function TaskApp() {
         setCurrentTasks(newCurrentTasks);
     }
 
+    const moveTaskHandler = (listId) => {
+        if(!moveTaskId || currentList.id === listId)
+            return;
+
+        const newNonCurrentTasks = [...nonCurrentTasks];
+        let l = newNonCurrentTasks.find(l => l.listId === listId);
+        l.tasks.push(currentTasks.find(t => t.id === moveTaskId));
+
+        setNonCurrentTasks(newNonCurrentTasks);
+        deleteTask(moveTaskId);
+        setMoveTaskId(null);
+    }
+
     return (
         <div className="Task-App">
             <div className="task-app-header">
@@ -103,9 +118,18 @@ function TaskApp() {
                         tasks={currentTasks}
                         current={currentTask.id} 
                         onChange={(id) => setCurrentTaskIndex(currentTasks.findIndex(t => t.id === id))}
+                        onTaskContextMenu={(id) => setMoveTaskId(id)}
                         onNewTask={newTask}
                         onDeleteTask={deleteTask}
-                    />
+                    >
+                        <TaskListPicker
+                            lists={lists} 
+                            current={currentList.id} 
+                            onChange={moveTaskHandler}
+                            chooseOne
+                            vertical
+                        /> 
+                    </TaskList>
                 </div>
                 <div className="task-content">
                     <TaskContent 

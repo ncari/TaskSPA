@@ -15,7 +15,7 @@ const TaskListPicker = (props) => {
 
     return (
         <div className="list-picker">
-            <Button.Group floated='left' size="mini">
+            <Button.Group floated='left' size="mini" vertical={props.vertical}>
                 {lists.map(({id, name}) => (
                     <Button 
                         color={id === current && 'active'} 
@@ -43,10 +43,10 @@ const TaskListPicker = (props) => {
                 }
                 <Button
                     style={{borderRadius: '0px'}}
-                    onClick={() => setEditing(true)}
+                    onClick={() => {!props.chooseOne && setEditing(true)}}
                     icon
                 >
-                    <Icon name="add" />
+                    <Icon name={props.chooseOne ? 'cancel' : 'add'} />
                 </Button>
             </Button.Group>
         </div>

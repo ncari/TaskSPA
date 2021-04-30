@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 import Draggable from './Draggable';
 
 const resumeLength = 100;
 const TaskList = (props) => {
+
+    const [listPicker, setListPicker] = useState({show: false, id: null, left: null, top: null});
+
     const resume = (text) => {
         if(text.length > resumeLength)
             return `${text.substring(0, resumeLength)}...`;
@@ -31,6 +35,11 @@ const TaskList = (props) => {
                         <div
                             className={classes}
                             onClick={() => props.onChange(task.id)}
+                            onContextMenu={(e) => {
+                                e.preventDefault();
+                                setListPicker({show: true, id: task.id, left: e.clientX, top: e.clientY});
+                                props.onTaskContextMenu(task.id)
+                            }}
                         >
                             <h1>
                                 {task.title}
@@ -49,6 +58,17 @@ const TaskList = (props) => {
                                 </span>
                             </h1>
                             <p>{resume(task.description)}</p>
+                            {(listPicker.show && listPicker.id === task.id) &&
+                                <div
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setListPicker({show: false, id: null, left: null, top: null})}
+                                    } 
+                                    style={{position: 'absolute', left: listPicker.left, top: listPicker.top}}
+                                >
+                                    {props.children}
+                                </div>
+                            }
                         </div>
                     </Draggable>
                 )
