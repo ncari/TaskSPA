@@ -107,7 +107,7 @@ function TaskApp() {
             <div className="task-app-header">
                 <TaskListPicker 
                     lists={lists} 
-                    current={currentList.id} 
+                    current={currentList ? currentList.id : null} 
                     onChange={changeList}
                     onNewList={newList}
                 /> 
@@ -116,7 +116,7 @@ function TaskApp() {
                 <div className="task-list">
                     <TaskList 
                         tasks={currentTasks}
-                        current={currentTask.id} 
+                        current={currentTask ? currentTask.id : null} 
                         onChange={(id) => setCurrentTaskIndex(currentTasks.findIndex(t => t.id === id))}
                         onTaskContextMenu={(id) => setMoveTaskId(id)}
                         onNewTask={newTask}
